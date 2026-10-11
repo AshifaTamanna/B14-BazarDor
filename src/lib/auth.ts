@@ -60,11 +60,12 @@ export function getAuth() {
           },
         }
       : {}),
-    ...(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET
+    ...(process.env.BETTER_AUTH_GITHUB_CLIENT_ID &&
+    process.env.BETTER_AUTH_GITHUB_SECRET
       ? {
           github: {
-            clientId: process.env.GITHUB_CLIENT_ID,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            clientId: process.env.BETTER_AUTH_GITHUB_CLIENT_ID,
+            clientSecret: process.env.BETTER_AUTH_GITHUB_SECRET,
           },
         }
       : {}),
