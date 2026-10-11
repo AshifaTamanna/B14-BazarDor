@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export default async function SignUpPage({
   searchParams,
 }: {
-  searchParams: Promise<{ next?: string }>;
+  searchParams: Promise<{ next?: string; error?: string }>;
 }) {
-  const { next } = await searchParams;
+  const { next, error } = await searchParams;
   const nextPath =
     next?.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
 
@@ -18,6 +18,7 @@ export default async function SignUpPage({
     <AuthForm
       mode="signup"
       nextPath={nextPath}
+      authError={error}
       authConfigured={isAuthConfigured()}
     />
   );

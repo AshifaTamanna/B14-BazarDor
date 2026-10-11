@@ -51,11 +51,12 @@ export function getAuth() {
   }
 
   const socialProviders = {
-    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+    ...(process.env.BETTER_AUTH_GOOGLE_CLIENT_ID &&
+    process.env.BETTER_AUTH_GOOGLE_SECRET
       ? {
           google: {
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+            clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID,
+            clientSecret: process.env.BETTER_AUTH_GOOGLE_SECRET,
           },
         }
       : {}),
@@ -71,10 +72,18 @@ export function getAuth() {
 
   return betterAuth({
     baseURL: process.env.BETTER_AUTH_URL,
+    basePath: "/api/auth",
     secret,
     database,
     emailAndPassword: { enabled: true },
     socialProviders,
+    account: {
+      accountLinking: {
+        enabled: true,
+        trustedProviders: ["google", "github"],
+        allowDifferentEmails: false,
+      },
+    },
     user: { changeEmail: { enabled: false } },
   });
 }

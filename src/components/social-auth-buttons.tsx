@@ -14,14 +14,26 @@ export function SocialAuthButtons({
   async function signInWithSocial(selectedProvider: "google" | "github") {
     setProvider(selectedProvider);
     try {
+      const errorCallback = new URL(window.location.href);
+      errorCallback.searchParams.delete("error");
+      errorCallback.searchParams.delete("error_description");
+
       const result = await authClient.signIn.social({
         provider: selectedProvider,
         callbackURL,
+        newUserCallbackURL: callbackURL,
+        errorCallbackURL: `${errorCallback.pathname}${errorCallback.search}`,
       });
       if (result.error) {
         toast.error(
-          result.error.message ||
-            `${selectedProvider === "google" ? "Google" : "GitHub"} সাইন ইন চালু নেই।`,
+          result.error.message === "Provider not found"
+            ? `${
+                selectedProvider === "google" ? "Google" : "GitHub"
+              } OAuth চালু নেই। .env.local-এ সংশ্লিষ্ট client ID ও client secret সেট করুন।`
+            : result.error.message ||
+                `${
+                  selectedProvider === "google" ? "Google" : "GitHub"
+                } দিয়ে সাইন ইন করা যায়নি।`,
         );
       }
     } catch (error) {

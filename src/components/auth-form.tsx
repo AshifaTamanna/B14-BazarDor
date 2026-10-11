@@ -13,12 +13,14 @@ export function AuthForm({
   nextPath = "/dashboard",
   protectedRedirect = false,
   registered = false,
+  authError,
   authConfigured,
 }: {
   mode: "signin" | "signup";
   nextPath?: string;
   protectedRedirect?: boolean;
   registered?: boolean;
+  authError?: string;
   authConfigured: boolean;
 }) {
   const router = useRouter();
@@ -41,7 +43,26 @@ export function AuthForm({
         id: "account-registration-complete",
       });
     }
-  }, [protectedRedirect, registered]);
+    if (authError) {
+      const errorMessages: Record<string, string> = {
+        oauth_provider_not_found:
+          "এই OAuth provider কনফিগার করা নেই। .env.local-এ সংশ্লিষ্ট client ID ও client secret সেট করুন।",
+        account_not_linked:
+          "এই ইমেইলে আগে থেকেই অ্যাকাউন্ট আছে। আগের সাইন-ইন পদ্ধতি ব্যবহার করে প্রবেশ করুন।",
+        account_already_linked_to_different_user:
+          "এই Google বা GitHub অ্যাকাউন্টটি অন্য একটি অ্যাকাউন্টের সাথে যুক্ত।",
+        email_not_verified:
+          "এই OAuth অ্যাকাউন্টের ইমেইল যাচাই করা নেই। ইমেইল যাচাই করে আবার চেষ্টা করুন।",
+        email_not_found:
+          "Google বা GitHub থেকে কোনো ইমেইল পাওয়া যায়নি। ইমেইল অনুমতি দিয়ে আবার চেষ্টা করুন।",
+        unable_to_link_account:
+          "এই OAuth অ্যাকাউন্টটি যুক্ত করা যায়নি। আগের সাইন-ইন পদ্ধতি দিয়ে প্রবেশ করুন।",
+      };
+      toast.error(
+        errorMessages[authError] || "সামাজিক মাধ্যমে সাইন ইন করা যায়নি। আবার চেষ্টা করুন।",
+      );
+    }
+  }, [authError, protectedRedirect, registered]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();

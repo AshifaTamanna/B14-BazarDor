@@ -9,6 +9,7 @@ type SignInProps = {
     next?: string;
     protected?: string;
     registered?: string;
+    error?: string;
   }>;
 };
 
@@ -17,6 +18,7 @@ export default async function SignInPage({ searchParams }: SignInProps) {
     next,
     protected: protectedRedirect,
     registered,
+    error,
   } = await searchParams;
   const nextPath =
     next?.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
@@ -27,6 +29,7 @@ export default async function SignInPage({ searchParams }: SignInProps) {
       nextPath={nextPath}
       protectedRedirect={protectedRedirect === "1"}
       registered={registered === "1"}
+      authError={error}
       authConfigured={isAuthConfigured()}
     />
   );
