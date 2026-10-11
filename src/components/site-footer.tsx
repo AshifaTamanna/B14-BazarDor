@@ -14,10 +14,6 @@ export function SiteFooter() {
         <p className="footer-disclaimer">
           সকল দাম সম্ভাব্য; বাজার অবস্থার ওপর নির্ভর করে পরিবর্তিত হয়।
         </p>
-        <nav className="footer-legal-links" aria-label="নীতিমালা">
-          <Link href="/privacy-policy">গোপনীয়তা নীতি</Link>
-          <Link href="/terms">ব্যবহারের শর্ত</Link>
-        </nav>
         <Link className="back-to-top" href="#top" aria-label="পাতার উপরে যান">
           <ArrowUpRight size={18} />
         </Link>
