@@ -7,7 +7,7 @@
 - Next.js App Router and React
 - TypeScript
 - Tailwind CSS 4 with custom responsive styling
-- Better Auth with local SQLite or MongoDB, email/password, Google, and GitHub providers
+- Better Auth with MongoDB, email/password, Google, and GitHub providers
 - Live product and category data from the BazarDor API
 - Lucide icons and react-hot-toast
 
